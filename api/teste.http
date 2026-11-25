@@ -1,0 +1,27 @@
+### Testes da Aula 10 — use a extensão "REST Client" do VS Code (clique em "Send Request")
+
+### Passo 1 — Login (copie o token da resposta)
+# @name login
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{ "email": "contato@technova.com", "senha": "123456" }
+
+### Passo 2 — Criar vaga SEM token (esperado: 401)
+POST http://localhost:3001/api/vagas
+Content-Type: application/json
+
+{ "titulo": "Teste", "tipo": "remoto" }
+
+### Passo 3 — Criar vaga COM token (esperado: 201)
+POST http://localhost:3001/api/vagas
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: application/json
+
+{ "titulo": "Vaga Autenticada", "tipo": "remoto", "tecnologias": "Node" }
+
+### Passo 4 — ViaCEP (esperado: São Paulo, SP)
+GET http://localhost:3001/api/cep/01310100
+
+### Passo 5 — CEP inexistente (esperado: 404)
+GET http://localhost:3001/api/cep/00000000
